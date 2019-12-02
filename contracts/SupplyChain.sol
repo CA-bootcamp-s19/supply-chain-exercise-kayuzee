@@ -111,7 +111,7 @@ contract SupplyChain {
   /* Add 2 modifiers to check if the item is sold already, and that the person calling this function
   is the seller. Change the state of the item to shipped. Remember to call the event associated with this function!*/
   function shipItem(uint sku)
-    public sold(sku)
+    public sold(sku) verifyCaller(items[sku].seller)
   {
     items[sku].seller = msg.sender;
     items[sku].state = State.Shipped;
@@ -122,7 +122,7 @@ contract SupplyChain {
   /* Add 2 modifiers to check if the item is shipped already, and that the person calling this function
   is the buyer. Change the state of the item to received. Remember to call the event associated with this function!*/
   function receiveItem(uint sku)
-    public shipped(sku)
+    public shipped(sku) verifyCaller(items[sku].buyer)
   {
     items[sku].buyer = msg.sender;
     items[sku].state = State.Received;
